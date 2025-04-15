@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Landing Price Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: #fff5f5;
+      color: #5c0a0a;
+      min-height: 100vh;
+      padding: 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: #b30000;
+      text-align: center;
+    }
+
+    .calculator {
+      background-color: #fff;
+      border: 1px solid #f2c2c2;
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 20px rgba(179, 0, 0, 0.05);
+    }
+
+    .input-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #5c0a0a;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid #ffcccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background-color: #b30000;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #990000;
+    }
+
+    .output-box {
+      margin-top: 2rem;
+      background-color: #ffe6e6;
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid #f5b6b6;
+    }
+
+    .output-box .result {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #b30000;
+    }
+
+    .output-box .earning {
+      font-size: 1rem;
+      color: #993333;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Landing Price Calculator</h1>
+    <div class="calculator">
+      <div class="input-group">
+        <label for="mrp">MRP (₹)</label>
+        <input type="number" id="mrp" placeholder="Enter MRP" />
+      </div>
+      <div class="input-group">
+        <label for="margin">Margin (%)</label>
+        <input type="number" id="margin" placeholder="Enter Margin %" />
+      </div>
+      <div class="input-group">
+        <label for="inputScheme">Input/Scheme/DD (%)</label>
+        <input type="number" id="inputScheme" placeholder="Enter Input/Scheme %" />
+      </div>
+      <div class="input-group">
+        <label for="discount">Additional Discount (%) (Optional)</label>
+        <input type="number" id="discount" placeholder="Enter Additional Discount %" />
+      </div>
+      <div class="input-group">
+        <label for="additionalSku">Additional SKU Price (₹) (Optional)</label>
+        <input type="number" id="additionalSku" placeholder="Enter Additional SKU Price" />
+      </div>
+      <button onclick="calculatePrice()">Calculate</button>
+      <div class="output-box">
+        <p><span id="landingPrice" class="result"></span></p>
+        <p><span id="earningPotential" class="earning"></span></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function calculatePrice() {
+      let mrp = parseFloat(document.getElementById("mrp").value);
+      let margin = parseFloat(document.getElementById("margin").value);
+      let inputScheme = parseFloat(document.getElementById("inputScheme").value);
+      let discount = parseFloat(document.getElementById("discount").value) || 0;
+      let additionalSku = parseFloat(document.getElementById("additionalSku").value) || 0;
+
+      let priceAfterMargin = mrp / (1 + margin / 100);
+      let priceAfterScheme = priceAfterMargin * (1 - inputScheme / 100);
+      let finalLandingPrice = priceAfterScheme * (1 - discount / 100);
+
+      let earningPotential = mrp - finalLandingPrice + additionalSku;
+
+      document.getElementById("landingPrice").innerText = `Landing Price (TDR): ₹${finalLandingPrice.toFixed(2)}`;
+      document.getElementById("earningPotential").innerText = `Earning Potential: ₹${earningPotential.toFixed(2)}`;
+    }
+  </script>
+</body>
+</html>
