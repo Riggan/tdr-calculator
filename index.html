@@ -148,7 +148,8 @@
 
       let priceAfterMargin = mrp / (1 + margin / 100);
       let priceAfterScheme = priceAfterMargin * (1 - inputScheme / 100);
-      let finalLandingPrice = priceAfterScheme * (1 - discount / 100);
+      let finalLandingPrice = priceAfterMargin * (1 - (inputScheme + discount) / 100);
+      //let finalLandingPrice = priceAfterScheme * (1 - discount / 100);
 
       let earningPotential = mrp - finalLandingPrice + additionalSku;
 
